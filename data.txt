@@ -1,0 +1,7 @@
+supabase password - Beast@@5696
+
+project id - jvmotjdjzgxfyhfwcksd
+
+service role key - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp2bW90amRqemd4ZnloZndja3NkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI1MDAzOCwiZXhwIjoyMDgwODI2MDM4fQ.Ysi_IjzIapRD2xMD4vFMAHMV_QnVLOUVfHzQB0tKuOE
+
+access tokens - sbp_3ea4ff9aa9bd86e50fe3f550f8f91b4bfaf81e89

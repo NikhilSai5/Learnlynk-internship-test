@@ -1,0 +1,10 @@
+# Node dependencies (backend + frontend)
+node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Gemini config / cache
+.gemini/
