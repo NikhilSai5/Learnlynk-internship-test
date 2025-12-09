@@ -69,13 +69,12 @@ Delivered as a runnable `.sql` file compatible with Supabase.
 
 ## Task 5 – Stripe Checkout Integration (Explanation)
 
-I'd start by setting up a backend endpoint that creates a Stripe Checkout Session when the user clicks to pay their application fee. This endpoint would use Stripe's SDK to generate the session with the fee amount and redirect URLs for success/failure.
-Before sending the user to Stripe's checkout page, I'd create a payment_request record in our database tied to their application ID, storing the Stripe session ID and setting the status as "pending."
-Once the session is created, I'd redirect the user to Stripe's hosted checkout page where they can securely enter their payment details.
-To handle payment completion, I'd set up a webhook endpoint that listens for Stripe events like checkout.session.completed. I'd make sure to verify the webhook signature for security.
-When the webhook confirms a successful payment, I'd update the payment_request status to "paid" and save any relevant transaction details. Then I'd update the application itself—maybe changing its stage from "awaiting payment" to "under review" or updating a timeline field to show payment was received.
-This approach keeps payment processing secure and ensures our database stays in sync with what actually happens in Stripe.
-
+- I'd create a backend endpoint (like /api/create-checkout-session) that uses Stripe's SDK to generate a Checkout Session with the application fee amount and success/cancel URLs
+- Before redirecting to Stripe, I'd store a payment_request record in the database linked to the application_id, saving the Stripe session ID and setting status as "pending"
+- On the frontend, I'd call this endpoint and redirect the user to Stripe's hosted checkout page using the session URL
+- I'd set up a webhook endpoint to listen for Stripe events like checkout.session.completed, making sure to verify the webhook signature for security
+- When payment succeeds, I'd update the payment_request status to "paid" and store the transaction metadata
+- Finally, I'd update the application's stage (like from "awaiting payment" to "under review") or timeline field to reflect that payment was completed
 ---
 
 All tasks have been completed according to the assignment specifications.
