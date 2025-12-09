@@ -13,6 +13,8 @@ All tasks (Task 1 to Task 5) have been successfully implemented as per the provi
   - Constraints (task type, due date validation)
   - Indexes for common query patterns
 - Schema supports multi-tenant data isolation
+  
+<img width="1918" height="871" alt="tasks table" src="https://github.com/user-attachments/assets/9cdbeeaa-b47b-437d-8e5f-78e2a97dcb9e" />
 
 Delivered as a runnable `.sql` file compatible with Supabase.
 
@@ -28,6 +30,9 @@ Delivered as a runnable `.sql` file compatible with Supabase.
     - Leads assigned to their team
 - Used JWT-based role checks and `auth.uid()` correctly
 
+  <img width="1918" height="857" alt="RLS pics" src="https://github.com/user-attachments/assets/6652a443-07f6-4ca2-848a-474d9640eb73" />
+
+
 ---
 
 ## Task 3 – Supabase Edge Function (`create-task`)
@@ -40,6 +45,9 @@ Delivered as a runnable `.sql` file compatible with Supabase.
   - Emits realtime event `task.created`
   - Proper error handling and HTTP status codes
 - Function is deployed and tested using the Supabase Edge Functions dashboard
+<img width="1918" height="875" alt="function page" src="https://github.com/user-attachments/assets/7401f0af-f090-48e2-95df-024edff46915" />
+
+<img width="636" height="852" alt="create task" src="https://github.com/user-attachments/assets/6550e30f-6fba-4340-8101-40fe4580f9ec" />
 
 ---
 
@@ -55,16 +63,18 @@ Delivered as a runnable `.sql` file compatible with Supabase.
   - Supports Mark Complete action
   - Handles loading and error states
 
+<img width="1918" height="1011" alt="can view task" src="https://github.com/user-attachments/assets/1667e79b-d359-4341-a4aa-bbcaa534298e" />
+
 ---
 
 ## Task 5 – Stripe Checkout Integration (Explanation)
 
-I would integrate Stripe Checkout by creating a secure backend endpoint (e.g. `/api/create-checkout-session`) that uses the Stripe SDK to create a Checkout Session for the application fee, specifying the amount, currency, and success/cancel URLs.  
-When creating the session, I would also store a `payment_request` record in the database linked to the `application_id`, saving the Stripe session ID and marking its status as `pending`.  
-On the frontend, when the user initiates payment, I would call this endpoint and redirect the user to Stripe’s hosted Checkout page using `session.url`.  
-I would then configure a Stripe webhook endpoint to listen for events such as `checkout.session.completed` and securely verify them using Stripe’s signing secret.  
-On successful payment, I would update the corresponding `payment_request` to `paid` and store transaction metadata.  
-Finally, I would update the related application’s stage or timeline (for example, from `awaiting_payment` to `paid`) to reflect the successful application fee payment.
+I'd start by setting up a backend endpoint that creates a Stripe Checkout Session when the user clicks to pay their application fee. This endpoint would use Stripe's SDK to generate the session with the fee amount and redirect URLs for success/failure.
+Before sending the user to Stripe's checkout page, I'd create a payment_request record in our database tied to their application ID, storing the Stripe session ID and setting the status as "pending."
+Once the session is created, I'd redirect the user to Stripe's hosted checkout page where they can securely enter their payment details.
+To handle payment completion, I'd set up a webhook endpoint that listens for Stripe events like checkout.session.completed. I'd make sure to verify the webhook signature for security.
+When the webhook confirms a successful payment, I'd update the payment_request status to "paid" and save any relevant transaction details. Then I'd update the application itself—maybe changing its stage from "awaiting payment" to "under review" or updating a timeline field to show payment was received.
+This approach keeps payment processing secure and ensures our database stays in sync with what actually happens in Stripe.
 
 ---
 
